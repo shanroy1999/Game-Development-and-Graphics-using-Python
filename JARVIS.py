@@ -88,6 +88,24 @@ if __name__ == "__main__":
 
                 except sr.RequestError as e:
                     print("failed".format(e))
+                    
+        elif "search" in query:
+            r2 = sr.Recognizer()
+            url = "https://www.google.com/search?q="
+            with sr.Microphone() as source:
+                speak("What would you like to search for?")
+                audio = r2.listen(source)
+
+                try:
+                    get = r2.recognize_google(audio)
+                    print(get)
+                    wb.get().open_new(url + get)
+
+                except sr.UnknownValueError:
+                    print("Error")
+
+                except sr.RequestError as e:
+                    print("failed".format(e))
 
 
         elif "open google" in query:
