@@ -90,16 +90,34 @@ if __name__ == "__main__":
                     print("failed".format(e))
                     
         elif "search" in query:
-            r2 = sr.Recognizer()
+            r3 = sr.Recognizer()
             url = "https://www.google.com/search?q="
             with sr.Microphone() as source:
                 speak("What would you like to search for?")
-                audio = r2.listen(source)
+                audio = r3.listen(source)
 
                 try:
-                    get = r2.recognize_google(audio)
+                    get = r3.recognize_google(audio)
                     print(get)
                     wb.get().open_new(url + get)
+
+                except sr.UnknownValueError:
+                    print("Error")
+
+                except sr.RequestError as e:
+                    print("failed".format(e))
+        
+        elif "find location" in query:
+            r4 = sr.Recognizer()
+            url = "https://google.nl/maps/place/"
+            with sr.Microphone() as source:
+                speak("Which location would you like to search for?")
+                audio = r4.listen(source)
+
+                try:
+                    get = r4.recognize_google(audio)
+                    print(get)
+                    wb.get().open_new(url + get + '/&amp;')
 
                 except sr.UnknownValueError:
                     print("Error")
