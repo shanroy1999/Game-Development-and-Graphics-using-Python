@@ -56,6 +56,8 @@ def get_all_moves(board, color, game):
     for piece in board.get_all_pieces(color):
         valid_moves = board.get_valid_moves(piece)          # get all the valid moves for that piece
         for move, skip in valid_moves.items():
+            # Visulalize and Simulate the board to check the best possible move 
+            # draw_moves(game, board, piece)
             # valid_moves.items() => dictionary => (row, col) : [pieces] => pieces that we skip to move to the position (row, col)
 
             # Make copy every time => To determine what the new board will look like on moving to position
@@ -73,3 +75,11 @@ def simulate_move(piece, move, board, game, skip):
     if skip:
         board.remove(skip)
     return board
+
+# Visulalize and Simulate the board to check the best possible move
+def draw_moves(game, board, piece):
+    valid_moves = board.get_valid_moves(piece)
+    board.draw(game.win)
+    pygame.draw.circle(game.win, (0, 255, 0), (piece.x, piece.y), 50, 5)
+    game.draw_valid_moves(valid_moves.keys())
+    pygame.display.update()
